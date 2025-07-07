@@ -1,0 +1,444 @@
+.btn-primary {
+  background: var(--primary-red);
+  color: var(--text-white);
+  border: 2px solid var(--primary-red-dark);
+  padding: 12px 24px;
+  border-radius: var(--border-radius-lg);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background: var(--secondary-yellow);
+  color: var(--text-primary);
+  border-color: var(--secondary-yellow-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-secondary {
+  background: var(--roblox-blue);
+  color: var(--text-white);
+  border: 2px solid var(--roblox-blue-dark);
+  padding: 12px 24px;
+  border-radius: var(--border-radius-lg);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:hover {
+  background: var(--roblox-blue-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-magic {
+  background: var(--gradient-magic);
+  color: var(--text-white);
+  border: 2px solid var(--magic-violet-dark);
+  padding: 12px 24px;
+  border-radius: var(--border-radius-lg);
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-md), var(--shadow-magic);
+  position: relative;
+}
+
+.btn-magic:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-xl), var(--shadow-magic);
+}
+
+.btn-magic::after {
+  content: "✨";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1.2);
+  }
+}
+
+.mission-card {
+  background: var(--bg-card);
+  border: 3px solid var(--magic-violet);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-magic);
+}
+
+.mission-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-xl), var(--shadow-magic);
+  border-color: var(--magic-violet-light);
+}
+
+.mission-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.mission-card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--gradient-roblox);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-white);
+  font-size: var(--font-size-xl);
+}
+
+.mission-card-title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--roblox-blue);
+  margin: 0;
+}
+
+.mission-card-description {
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-lg);
+}
+
+.mission-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-lg);
+}
+
+.mission-difficulty {
+  background: var(--secondary-yellow);
+  color: var(--text-primary);
+  padding: 4px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.mission-time {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+}
+
+.lab-container {
+  background: var(--bg-card);
+  border: 2px solid var(--roblox-blue);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.lab-container::before {
+  content: "🧪 LABORATORIO DE SCRIPTS";
+  position: absolute;
+  top: -12px;
+  left: var(--spacing-lg);
+  background: var(--roblox-blue);
+  color: var(--text-white);
+  padding: 4px 16px;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.lab-editor {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-sm);
+  color: #00ff00;
+  min-height: 300px;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.lab-output {
+  background: #000;
+  border: 1px solid #333;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  font-family: var(--font-family-code);
+  font-size: var(--font-size-sm);
+  color: #00ff00;
+  min-height: 200px;
+  margin-top: var(--spacing-md);
+  white-space: pre-wrap;
+}
+
+.lab-run-button {
+  background: var(--gradient-success);
+  color: var(--text-white);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius-lg);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  margin-top: var(--spacing-md);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.lab-run-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.contact-zone {
+  background: var(--gradient-secondary);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-2xl);
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-zone::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+.contact-zone-title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-zone-description {
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.9;
+}
+
+.progress-card {
+  background: var(--gradient-primary);
+  color: var(--text-white);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>')
+    repeat;
+  pointer-events: none;
+}
+
+.progress-bar {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-full);
+  height: 12px;
+  overflow: hidden;
+  margin-top: var(--spacing-md);
+}
+
+.progress-fill {
+  background: var(--secondary-yellow);
+  height: 100%;
+  border-radius: var(--border-radius-full);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-success {
+  background: var(--success-green);
+  color: var(--text-white);
+}
+
+.badge-warning {
+  background: var(--warning-orange);
+  color: var(--text-white);
+}
+
+.badge-info {
+  background: var(--info-cyan);
+  color: var(--text-white);
+}
+
+.badge-magic {
+  background: var(--gradient-magic);
+  color: var(--text-white);
+  box-shadow: var(--shadow-magic);
+}
+
+.glow-effect {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px var(--primary-red), 0 0 10px var(--primary-red), 0 0 15px var(--primary-red);
+  }
+  to {
+    box-shadow: 0 0 10px var(--primary-red), 0 0 20px var(--primary-red), 0 0 30px var(--primary-red);
+  }
+}
+
+.bounce-in {
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.pulse-magic {
+  animation: pulseMagic 2s infinite;
+}
+
+@keyframes pulseMagic {
+  0% {
+    box-shadow: 0 0 0 0 rgba(151, 71, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(151, 71, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(151, 71, 255, 0);
+  }
+}

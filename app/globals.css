@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+ @layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+  }
+
+  .shadow-glow-purple {
+    box-shadow: 0 0 20px rgba(118, 75, 162, 0.3);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+@layer base {
+  :root {
+    --background: 0 0% 96%; /* #F4F4F4 - Light gray neutral */
+    --foreground: 0 0% 17%; /* #2C2C2C - Graphite gray dark neutral */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 17%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 17%;
+    --primary: 211 100% 50%; /* #007BFF - Electric blue primary */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 25 100% 63%; /* #FF8C42 - Playful orange secondary */
+    --secondary-foreground: 0 0% 17%;
+    --muted: 0 0% 96%; /* #F4F4F4 - Light gray neutral */
+    --muted-foreground: 0 0% 45%;
+    --accent: 25 100% 63%; /* #FF8C42 - Playful orange secondary */
+    --accent-foreground: 0 0% 17%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 211 100% 50%; /* #007BFF - Electric blue primary */
+    --chart-1: 211 100% 50%; /* #007BFF - Electric blue */
+    --chart-2: 25 100% 63%; /* #FF8C42 - Playful orange */
+    --chart-3: 0 0% 17%; /* #2C2C2C - Graphite gray */
+    --chart-4: 0 0% 96%; /* #F4F4F4 - Light gray */
+    --chart-5: 168 100% 39%; /* #00C896 - Lime green success */
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 17%;
+    --sidebar-primary: 211 100% 50%; /* #007BFF - Electric blue */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 25 100% 63%; /* #FF8C42 - Playful orange */
+    --sidebar-accent-foreground: 0 0% 17%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 211 100% 50%; /* #007BFF - Electric blue */
+  }
+  .dark {
+    --background: 0 0% 17%; /* #2C2C2C - Graphite gray dark neutral */
+    --foreground: 0 0% 96%; /* #F4F4F4 - Light gray neutral */
+    --card: 0 0% 17%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 17%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 211 100% 50%; /* #007BFF - Electric blue primary */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 25 100% 63%; /* #FF8C42 - Playful orange secondary */
+    --secondary-foreground: 0 0% 17%;
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 25 100% 63%; /* #FF8C42 - Playful orange secondary */
+    --accent-foreground: 0 0% 17%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 211 100% 50%; /* #007BFF - Electric blue primary */
+    --chart-1: 211 100% 50%; /* #007BFF - Electric blue */
+    --chart-2: 25 100% 63%; /* #FF8C42 - Playful orange */
+    --chart-3: 168 100% 39%; /* #00C896 - Lime green success */
+    --chart-4: 0 0% 96%; /* #F4F4F4 - Light gray */
+    --chart-5: 0 0% 17%; /* #2C2C2C - Graphite gray */
+    --sidebar-background: 0 0% 17%; /* #2C2C2C - Graphite gray */
+    --sidebar-foreground: 0 0% 96%; /* #F4F4F4 - Light gray */
+    --sidebar-primary: 211 100% 50%; /* #007BFF - Electric blue */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 25 100% 63%; /* #FF8C42 - Playful orange */
+    --sidebar-accent-foreground: 0 0% 17%;
+    --sidebar-border: 0 0% 25%;
+    --sidebar-ring: 211 100% 50%; /* #007BFF - Electric blue */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
