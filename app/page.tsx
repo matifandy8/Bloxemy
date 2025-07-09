@@ -273,7 +273,7 @@ export default function HomePage() {
               className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
             >
               ¿Por Qué Elegir
-              <span className="bg-gradient-to-r from-emerald-500 to-blue-500 bg-clip-text text-transparent"> CodemyBlox</span>?
+              <span className="bg-gradient-to-r from-emerald-500 to-blue-500 bg-clip-text text-transparent"> Bloxemy</span>?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Una experiencia de aprendizaje única y segura

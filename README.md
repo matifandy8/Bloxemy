@@ -1,6 +1,6 @@
-# CodemyBlox - Plataforma Educativa de Roblox
+# Bloxemy - Plataforma Educativa de Roblox
 
-CodemyBlox es una plataforma educativa divertida e interactiva diseñada para enseñar programación en Lua y Roblox Studio a través de misiones gamificadas, tutoriales y un laboratorio de scripts. ¡Perfecta para estudiantes, educadores y cualquier persona interesada en aprender a programar creando juegos!
+Bloxemy es una plataforma educativa divertida e interactiva diseñada para enseñar programación en Lua y Roblox Studio a través de misiones gamificadas, tutoriales y un laboratorio de scripts. ¡Perfecta para estudiantes, educadores y cualquier persona interesada en aprender a programar creando juegos!
 
 ## Características
 - **Misiones Gamificadas:** Avanza a través de desafíos interactivos de programación y desbloquea logros.
@@ -23,8 +23,8 @@ CodemyBlox es una plataforma educativa divertida e interactiva diseñada para en
 ### Instalación
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/codemyblox.git
-   cd codemyblox
+   git clone https://github.com/tu-usuario/Bloxemy.git
+   cd Bloxemy
    ```
 2. Instala las dependencias:
    ```bash
