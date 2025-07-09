@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "CodemyBlox",
+      "name": "Bloxemy",
       "dependencies": {
         "@hookform/resolvers": "^3.9.1",
         "@monaco-editor/react": "^4.7.0",

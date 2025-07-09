@@ -25,7 +25,7 @@ export default function Footer() {
               <Trophy className="w-6 h-6 text-white" />
             </div>
             <span className="text-3xl font-black tracking-wide bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
-              CodemyBlox
+              Bloxemy
             </span>
           </div>
           <p className="text-blue-200 text-lg max-w-2xl mx-auto mb-8">
@@ -103,7 +103,7 @@ export default function Footer() {
         <div className="border-t border-white/20 pt-8 text-center">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-gray-400 text-sm">
-              © 2024 CodemyBlox. Todos los derechos reservados.
+              © 2024 Bloxemy. Todos los derechos reservados.
             </p>
             <div className="flex items-center space-x-6 text-sm text-gray-400">
               <span>Hecho con ❤️ para futuros programadores</span>
