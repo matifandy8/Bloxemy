@@ -22,11 +22,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import missionsData from "@/lib/missionsData";
-import {
-  runMissionCode as runCode,
-  completeMissionWithValidation as completeMission,
-} from "@/lib/services/missionService";
 import dynamic from "next/dynamic";
+import { runMissionCode } from "@/lib/services/missionService";
+import { useToast } from "@/components/ui/use-toast";
 
 const MonacoEditor = dynamic(
   () => import("@monaco-editor/react").then((mod) => mod.default),
@@ -49,31 +47,65 @@ export default function MissionPage() {
   const [output, setOutput] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
   const [showHint, setShowHint] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("")
 
   const missionData = missionsData[missionId as keyof typeof missionsData];
   const mission = missionData
     ? {
-        ...missionData,
-        id: missionId,
-        difficulty: "Principiante",
-        category: "Básico",
-      }
+      ...missionData,
+      id: missionId,
+      difficulty: "Principiante",
+      category: "Básico",
+    }
     : null;
 
-  useEffect(() => {
-    if (mission) {
-      setUserCode(mission.challenge.starterCode);
-      const progress = JSON.parse(
-        localStorage.getItem("codemyblox-progress") || "{}",
-      );
-      setIsCompleted(progress[missionId]?.completed || false);
-    }
-  }, [mission, missionId]);
+    useEffect(() => {
+      if (mission) {
+        const progress = JSON.parse(
+          localStorage.getItem("Bloxemy-progress") || "{}"
+        );
+        const savedCode = progress[missionId]?.code;
+        setUserCode(savedCode ?? mission.challenge.starterCode);
+        const completed = localStorage.getItem("completed")
+          ? JSON.parse(localStorage.getItem("completed") || "{}")
+          : {};
+        const isMissionCompleted = completed[missionId];
+        if (isMissionCompleted) {
+          setIsCompleted(true);
+        }
+
+      }
+    }, [mission, missionId]);
 
   if (!mission) {
     return <div>Misión no encontrada</div>;
   }
 
+  const handleCodeChange = (newCode: string | undefined) => {
+    const updatedCode = newCode ?? "";
+    setUserCode(updatedCode);
+  
+    const progress = JSON.parse(
+      localStorage.getItem("Bloxemy-progress") || "{}"
+    );
+    progress[missionId] = {
+      ...progress[missionId],
+      code: updatedCode,
+    };
+    localStorage.setItem("Bloxemy-progress", JSON.stringify(progress));
+  };
+
+  const progress = JSON.parse(localStorage.getItem("Bloxemy-progress") || "{}");
+
+  const handleRunCode = () => {
+    runMissionCode(userCode, mission, (output) => {
+      setOutput(output);
+      if (output.includes("¡Código ejecutado correctamente!")) {
+        setSuccessMessage("Mision Completada")
+      }
+    });
+  };
+  
   return (
     <div
       className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
@@ -101,12 +133,16 @@ export default function MissionPage() {
                 </p>
               </div>
             </div>
-            {isCompleted && (
-              <Badge className="bg-green-500 text-white">
-                <CheckCircle className="w-4 h-4 mr-1" />
-                Completada
-              </Badge>
-            )}
+            <div className="flex items-center space-x-4">
+            {progress[missionId]?.completed && (
+                    <Badge
+                      className="ml-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white flex items-center gap-2 text-sm px-3 py-1"
+                    >
+                      <CheckCircle className="w-4 h-4" />
+                      Completada
+                    </Badge>
+                  )}
+            </div>
           </div>
         </div>
       </header>
@@ -223,24 +259,6 @@ export default function MissionPage() {
                     <Lightbulb className="w-4 h-4 mr-2" />
                     {showHint ? "Ocultar Pista" : "Ver Pista"}
                   </Button>
-                  {!isCompleted && (
-                    <Button
-                      onClick={() =>
-                        completeMission(
-                          userCode,
-                          mission,
-                          setOutput,
-                          setIsCompleted,
-                        )
-                      }
-                      className="bg-green-500 hover:bg-green-600"
-                    >
-                      <CheckCircle
-                        className="w-4 h-4 mr-2"
-                      />
-                      Marcar como Completada
-                    </Button>
-                  )}
                 </div>
 
                 {showHint && (
@@ -286,8 +304,8 @@ export default function MissionPage() {
                       height="300px"
                       language="lua"
                       theme="vs-dark"
-                      defaultValue={userCode}
-                      onChange={(value) => setUserCode(value ?? "")}
+                      value={userCode}
+                      onChange={handleCodeChange}
                       options={{
                         fontSize: 14,
                         minimap: { enabled: false },
@@ -299,7 +317,7 @@ export default function MissionPage() {
                     />
                   </div>
                   <Button
-                    onClick={() => runCode(userCode, mission, setOutput)}
+                    onClick={handleRunCode}
                     className="mt-2 w-full"
                   >
                     <Play className="w-4 h-4 mr-2" />
@@ -330,6 +348,21 @@ export default function MissionPage() {
                     {output ||
                       '> Presiona "Ejecutar Código" para ver los resultados...'}
                   </div>
+                  {successMessage && (
+                    <div className="mt-4 p-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg border border-emerald-200">
+                      <div className="flex items-center space-x-3">
+                        <CheckCircle className="w-6 h-6 text-white animate-pulse" />
+                        <div>
+                          <h3 className="text-white font-semibold text-lg">
+                            ¡Misión Completada!
+                          </h3>
+                          <p className="text-emerald-100 text-sm">
+                            Has superado este desafío con éxito
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CheckCircle, Play } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Mission } from "@/lib/types/validationTypes";
 
 export default function MisionesPage() {
   const [progress, setProgress] = useState<{
@@ -21,7 +22,7 @@ export default function MisionesPage() {
 
   useEffect(() => {
     const stored = JSON.parse(
-      localStorage.getItem("codemyblox-progress") || "{}",
+      localStorage.getItem("Bloxemy-progress") || "{}",
     );
     setProgress(stored);
   }, []);
@@ -60,7 +61,7 @@ export default function MisionesPage() {
         <div
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {Object.entries(missionsData).map(([id, mission]) => (
+          {Object.entries(missionsData).map(([id, mission]: [string, Mission]) => (
             <Card 
               key={id} 
               className="relative group glass border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" 
@@ -82,7 +83,7 @@ export default function MisionesPage() {
                   {mission.title}
                   {progress[id]?.completed && (
                     <Badge
-                      className="ml-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white flex items-center gap-2 text-sm px-3 py-1"
+                      className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white flex items-center text-sm gap-1 px-1 py-1 w-fit my-2"
                     >
                       <CheckCircle className="w-4 h-4" />
                       Completada

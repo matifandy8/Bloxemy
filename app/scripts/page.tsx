@@ -9,54 +9,23 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Copy } from "lucide-react";
+import { Copy, Info } from "lucide-react";
 import { useState } from "react";
+import scripts from "@/lib/scriptsData";
 
-const scripts = [
-  {
-    title: "Hola Mundo",
-    description: "Imprime un mensaje en la consola de Roblox Studio.",
-    code: `print("¡Hola, mundo de Roblox!")`,
-  },
-  {
-    title: "Crear Parte Básica",
-    description: "Crea un bloque (Part) en el Workspace.",
-    code: `local part = Instance.new("Part")
-part.Size = Vector3.new(4, 1, 2)
-part.Position = Vector3.new(0, 5, 0)
-part.BrickColor = BrickColor.new("Bright blue")
-part.Parent = workspace`,
-  },
-  {
-    title: "Mensaje en pantalla",
-    description: "Muestra un mensaje en la pantalla del jugador.",
-    code: `game.StarterGui:SetCore("SendNotification", {
-  Title = "¡Bienvenido!",
-  Text = "Este es un mensaje en pantalla.",
-  Duration = 5
-})`,
-  },
-  {
-    title: "Loop de colores",
-    description: "Cambia el color de una parte cada segundo.",
-    code: `local part = workspace.Part -- Cambia 'Part' por el nombre de tu parte
-local colores = {"Bright red", "Bright blue", "Bright green"}
-local i = 1
-while true do
-  part.BrickColor = BrickColor.new(colores[i])
-  i = i % #colores + 1
-  wait(1)
-end`,
-  },
-];
 
 export default function ScriptsPage() {
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [expandedScript, setExpandedScript] = useState<number | null>(null);
 
   const handleCopy = (code: string, idx: number) => {
     navigator.clipboard.writeText(code);
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 1500);
+  };
+
+  const toggleExpanded = (idx: number) => {
+    setExpandedScript(expandedScript === idx ? null : idx);
   };
 
   return (
@@ -113,12 +82,36 @@ export default function ScriptsPage() {
                   {script.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-4">
                 <pre
                   className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto"
                 >
                   <code>{script.code}</code>
                 </pre>
+                
+                {script.howToUse && (
+                  <div className="border-t pt-4">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => toggleExpanded(idx)}
+                      className="flex items-center gap-2 text-blue-600 hover:text-blue-700"
+                    >
+                      <Info className="w-4 h-4" />
+                      {expandedScript === idx ? "Ocultar" : "Cómo usar"}
+                    </Button>
+                    
+                    {expandedScript === idx && (
+                      <div className="mt-3 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <div className="prose prose-sm max-w-none">
+                          <div className="whitespace-pre-line text-sm text-gray-700">
+                            {script.howToUse}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}

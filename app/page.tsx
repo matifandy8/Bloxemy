@@ -130,7 +130,7 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <Card
-              className="text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-0 glass group cursor-pointer"
+              className="text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-0 glass group"
             >
               <CardHeader>
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -148,7 +148,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
             <Card
-              className="text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-0 glass group cursor-pointer"
+              className="text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-0 glass group"
             >
               <CardHeader>
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
@@ -166,7 +166,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
             <Card
-              className="text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-0 glass group cursor-pointer"
+              className="text-center hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border-0 glass group"
             >
               <CardHeader>
                 <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
