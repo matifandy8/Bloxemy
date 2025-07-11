@@ -7,10 +7,14 @@ export function middleware(request: NextRequest) {
   const csp = [
     `default-src 'self'`,
     `script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net`,
-    `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net`,
-    `font-src 'self' https://fonts.gstatic.com`,
+    `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com https://cdn.jsdelivr.net`,
+    `font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net`,
     `img-src 'self' data:`,
     `object-src 'none'`,
+    `worker-src 'self' blob:`,
+    `connect-src 'self'`,
+    `base-uri 'none'`,
+    `form-action 'self'`,
   ].join('; ')
 
   const response = NextResponse.next()
