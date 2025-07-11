@@ -25,4 +25,5 @@ export interface Mission {
   challenge: MissionChallenge
   difficulty: string
   category: string
+  available?: boolean;
 } 

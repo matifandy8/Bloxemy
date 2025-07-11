@@ -78,8 +78,27 @@ export default function MissionPage() {
     }, [mission, missionId]);
 
   if (!mission) {
-    return <div>Misión no encontrada</div>;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+        <div className="bg-white shadow-lg rounded-lg p-8 flex flex-col items-center border-2 border-dashed border-red-300">
+          <svg xmlns="http://www.w3.org/2000/svg" className="text-red-500 w-16 h-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h2 className="text-2xl font-bold mb-2 text-gray-800">Misión no encontrada</h2>
+          <p className="text-gray-600 mb-4 text-center max-w-md">
+            La misión que buscas no existe o el enlace es incorrecto.<br/>
+            Por favor, revisa la URL o elige otra misión para continuar aprendiendo.
+          </p>
+          <Link href="/misiones">
+            <Button variant="outline" size="lg">
+              <ArrowLeft className="w-4 h-4 mr-2" /> Volver a misiones
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
   }
+
 
   const handleCodeChange = (newCode: string | undefined) => {
     const updatedCode = newCode ?? "";
@@ -189,28 +208,32 @@ export default function MissionPage() {
                   </div>
                 </div>
 
-                <Card className="bg-gray-50">
-                  <CardHeader>
-                    <CardTitle className="text-lg">
-                      💻 Código de Ejemplo
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <pre
-                      className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto"
-                    >
-                      <code>{mission.tutorial.code}</code>
-                    </pre>
-                  </CardContent>
-                </Card>
+                {mission.tutorial.code && (
+                  <Card className="bg-gray-50">
+                    <CardHeader>
+                      <CardTitle className="text-lg">
+                        💻 Código de Ejemplo
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <pre
+                        className="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto"
+                      >
+                        <code>{mission.tutorial.code}</code>
+                      </pre>
+                    </CardContent>
+                  </Card>
+                )}
 
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <div
-                    className="whitespace-pre-line text-gray-700"
-                  >
-                    {mission.tutorial.explanation}
-                  </div>
-                </div>
+               {mission.tutorial.explanation && (
+                 <div className="bg-blue-50 p-4 rounded-lg">
+                 <div
+                   className="whitespace-pre-line text-gray-700"
+                 >
+                   {mission.tutorial.explanation}
+                 </div>
+               </div>
+               )}
               </CardContent>
             </Card>
           </TabsContent>

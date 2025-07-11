@@ -12,13 +12,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CheckCircle, Play } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Mission } from "@/lib/types/validationTypes";
+import ModalWaitlist from "../../components/ModalWaitlist";
 
 export default function MisionesPage() {
   const [progress, setProgress] = useState<{
     [key: string]: { completed: boolean };
   }>({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMission, setModalMission] = useState<{id: string, title: string} | null>(null);
 
   useEffect(() => {
     const stored = JSON.parse(
@@ -26,6 +29,11 @@ export default function MisionesPage() {
     );
     setProgress(stored);
   }, []);
+
+  const handleWaitlistClick = (id: string, title: string) => {
+    setModalMission({ id, title });
+    setModalOpen(true);
+  };
 
   return (
     <div
@@ -64,9 +72,9 @@ export default function MisionesPage() {
           {Object.entries(missionsData).map(([id, mission]: [string, Mission]) => (
             <Card 
               key={id} 
-              className="relative group glass border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" 
+              className={`relative group glass border border-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden ${mission.available === false ? 'opacity-60 grayscale' : ''}`}
             >
-              {progress[id]?.completed && (
+              {progress[id]?.completed && mission.available !== false && (
                 <div className="absolute top-4 right-4 z-10">
                   <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full flex items-center justify-center shadow-lg">
                     <CheckCircle className="w-5 h-5 text-white" />
@@ -81,13 +89,16 @@ export default function MisionesPage() {
                   className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300"
                 >
                   {mission.title}
-                  {progress[id]?.completed && (
+                  {progress[id]?.completed && mission.available !== false && (
                     <Badge
                       className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white flex items-center text-sm gap-1 px-1 py-1 w-fit my-2"
                     >
                       <CheckCircle className="w-4 h-4" />
                       Completada
                     </Badge>
+                  )}
+                  {mission.available === false && (
+                    <Badge className="bg-gray-300 text-gray-600 ml-2">Próximamente</Badge>
                   )}
                 </CardTitle>
                 <CardDescription className="text-gray-600 text-base leading-relaxed">
@@ -96,23 +107,35 @@ export default function MisionesPage() {
               </CardHeader>
               
               <CardContent className="relative z-10">
-                <Link href={`/mision/${id}`}>
-                  <Button
-                    className={`w-full font-bold py-6 text-lg rounded-xl transition-all duration-300 ${
-                      progress[id]?.completed 
-                        ? "bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 shadow-lg hover:shadow-xl" 
-                        : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-glow"
-                    } hover:scale-105`}
-                  >
-                    <Play className="w-5 h-5 mr-3" />
-                    {progress[id]?.completed ? "Revisar Misión" : "Comenzar Misión"}
+                {mission.available === false ? (
+                  <Button className="w-full font-bold py-6 text-lg rounded-xl bg-gray-300 text-black  cursor-pointer" onClick={() => handleWaitlistClick(id, mission.title)}>
+                    Próximamente
                   </Button>
-                </Link>
+                ) : (
+                  <Link href={`/mision/${id}`}>
+                    <Button
+                      className={`w-full font-bold py-6 text-lg rounded-xl transition-all duration-300 ${
+                        progress[id]?.completed 
+                          ? "bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 shadow-lg hover:shadow-xl" 
+                          : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-lg hover:shadow-glow"
+                      } hover:scale-105`}
+                    >
+                      <Play className="w-5 h-5 mr-3" />
+                      {progress[id]?.completed ? "Revisar Misión" : "Comenzar Misión"}
+                    </Button>
+                  </Link>
+                )}
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
+      <ModalWaitlist
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        missionTitle={modalMission?.title || ""}
+        missionId={modalMission?.id || ""}
+      />
     </div>
   );
 }

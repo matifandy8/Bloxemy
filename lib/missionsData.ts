@@ -1,593 +1,345 @@
-const missionsData = {
-    "poder-creacion": {
-      title: "Poder de la Creación",
-      description: "Introducción a Roblox Studio, objetos y print()",
-      tutorial: {
-        content: `¡Bienvenido a tu primera misión, joven programador!
-  
-  En Roblox Studio, todo lo que ves son **objetos**. Una pared es un objeto, un personaje es un objeto, ¡incluso la luz es un objeto!
-  
-  El comando más importante que aprenderás hoy es \`print()\`. Es como darle una voz a tu código para que te hable.
-  
-  **¿Qué hace print()?**
-  - Muestra mensajes en la consola de Roblox Studio
-  - Te ayuda a entender qué está pasando en tu código
-  - Es perfecto para saludar al mundo de la programación
-  - Los desarrolladores profesionales lo usan para depurar código
-  
-  **Reglas importantes:**
-  - El texto debe ir entre comillas: "mi texto"
-  - Los números no necesitan comillas: 123
-  - Cada print() debe terminar con punto y coma (opcional pero recomendado)`,
-        code: `-- Mi primer script en Roblox!
-  print("¡Hola, mundo de Roblox!")
-  print("Soy un programador en entrenamiento")
-  print("Mi nombre es SuperCoder")
-  
-  -- También puedes imprimir números
-  print(2024)
-  print(10 + 5)
-  print("El resultado es:", 10 + 5)
-  
-  -- Comentarios te ayudan a recordar qué hace tu código
-  -- Todo lo que empiece con -- es un comentario`,
-        explanation: `**¿Qué está pasando aquí?**
-  
-  1. **Comentarios**: Las líneas que empiezan con \`--\` son notas para ti
-  2. **Texto**: \`print("texto")\` muestra palabras entre comillas
-  3. **Números**: \`print(123)\` muestra números sin comillas
-  4. **Matemáticas**: Puedes hacer cálculos dentro de print()
-  5. **Múltiples valores**: Puedes imprimir texto y números juntos`,
-      },
-      challenge: {
-        title: "Reto: Tu Primer Saludo Completo",
-        description:
-          "Crea un script que imprima exactamente 3 mensajes: tu nombre, tu edad y tu juego favorito de Roblox. Cada mensaje debe ser diferente.",
-        starterCode: `-- Completa este código con tu información personal
-  -- Debes tener exactamente 3 print() diferentes
-  
-  print("Mi nombre es: ")
-  print("Tengo años")
-  print("Mi juego favorito de Roblox es: ")`,
-        solution: `-- Ejemplo de solución correcta
-  print("Mi nombre es: Alex")
-  print("Tengo 12 años")
-  print("Mi juego favorito de Roblox es: Adopt Me!")`,
-        hint: "🔍 Pista: Debes completar cada print() con tu información real. Asegúrate de que cada mensaje sea diferente y contenga las palabras clave: 'nombre', 'años', 'juego'.",
-        validation: {
-          requiredPrints: 3,
-          mustContain: ["nombre", "años", "juego"],
-          customValidation: (code: string) => {
-            const prints = code.match(/print\s*$$[^)]+$$/g) || []
-            const hasEmptyPrints = prints.some((p) => p.includes('""') || p.includes("''"))
-            if (hasEmptyPrints) {
-              return {
-                isValid: false,
-                message: "❌ No dejes prints vacíos\n💡 Cada print() debe tener información real, no cadenas vacías",
-              }
-            }
-            return { isValid: true, message: "" }
-          },
+const missionsData: Record<string, any> = {
+  "hola-roblox": {
+    title: "¡Hola, Roblox! (print y comentarios)",
+    description: "Aprende a mostrar mensajes en la consola y a usar comentarios.",
+    tutorial: {
+      content: `En programación, los comentarios sirven para dejar notas o aclaraciones en el código, y la función print() te permite mostrar mensajes en la consola para ver resultados o depurar tu script. Usar comentarios y print es fundamental para entender y mejorar tu código.`,
+      code: `-- Este es un comentario
+print("¡Hola, Roblox!")
+print("Mi primer script")
+-- Puedes escribir lo que quieras aquí`,
+      explanation: `- print() muestra mensajes en la consola
+- Los comentarios empiezan con -- y no se ejecutan`
+    },
+    challenge: {
+      title: "Reto: Tu primer saludo",
+      description: "Imprime tu color favorito y una meta de aprendizaje usando print(). Agrega al menos un comentario.",
+      starterCode: `-- Escribe tu código aquí
+`,
+      solution: `-- Mi meta en Roblox
+print("Mi color favorito es el verde")
+print("Quiero aprender a crear juegos")`,
+      hint: "Usa print() y al menos un comentario. No repitas los textos del ejemplo.",
+      validation: {
+        requiredPrints: 2,
+        mustContain: ["print"],
+        customValidation: (code: string) => {
+          const tutorialCode = `-- Este es un comentario\nprint(\"¡Hola, Roblox!\")\nprint(\"Mi primer script\")\n-- Puedes escribir lo que quieras aquí`;
+          const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+          if (normalize(code) === normalize(tutorialCode)) {
+            return { isValid: false, message: "No copies el ejemplo del tutorial. Escribe tus propios mensajes." };
+          }
+          return { isValid: true, message: "" };
         },
       },
     },
-    "lenguaje-objetos": {
-      title: "El Lenguaje de los Objetos",
-      description: "Variables y propiedades básicas",
-      tutorial: {
-        content: `¡Excelente trabajo en tu primera misión! Ahora aprenderás sobre las **variables**.
-  
-  Las variables son como **cajas mágicas** donde puedes guardar información. En Lua, crear una variable es súper fácil, pero muy poderoso.
-  
-  **¿Por qué usar variables?**
-  - Guardan información que puedes usar después
-  - Hacen tu código más organizado y fácil de leer
-  - Te permiten cambiar valores fácilmente
-  - Son la base de toda programación
-  
-  **Tipos de datos en Lua:**
-  - **String (texto)**: Palabras entre comillas "Hola"
-  - **Number (números)**: Para matemáticas y contadores 123
-  - **Boolean**: true o false (verdadero o falso)
-  - **Nil**: Valor vacío (como una caja sin nada)
-  
-  **Reglas para nombres de variables:**
-  - Deben empezar con letra o guión bajo
-  - No pueden tener espacios (usa guión bajo: mi_variable)
-  - No pueden ser palabras reservadas de Lua`,
-        code: `-- Creando variables con local
-  local nombreJugador = "SuperCoder123"
-  local edad = 12
-  local tieneRobux = true
-  local puntaje = 0
-  local nivelFavorito = nil
-  
-  -- Usando las variables con concatenación (..)
-  print("=== PERFIL DE JUGADOR ===")
-  print("Jugador: " .. nombreJugador)
-  print("Edad: " .. edad)
-  print("Puntaje actual: " .. puntaje)
-  print("Tiene Robux: " .. tostring(tieneRobux))
-  
-  -- Cambiando valores de variables
-  puntaje = puntaje + 100
-  edad = edad + 1
-  
-  print("\\n=== DESPUÉS DE JUGAR ===")
-  print("Nuevo puntaje: " .. puntaje)
-  print("Nueva edad: " .. edad)`,
-        explanation: `**Conceptos importantes:**
-  
-  1. **local**: Crea una variable nueva (siempre usa local)
-  2. **=**: Asigna un valor a la variable
-  3. **..**: Une (concatena) texto con variables
-  4. **tostring()**: Convierte boolean a texto para mostrarlo
-  5. **\\n**: Crea una nueva línea en el output
-  6. **Reasignación**: Puedes cambiar el valor después: puntaje = puntaje + 100`,
-      },
-      challenge: {
-        title: "Reto: Perfil de Jugador Completo",
-        description:
-          "Crea 4 variables diferentes para un perfil de jugador y muéstralas usando print() con concatenación. Debes usar todos los tipos de datos.",
-        starterCode: `-- Crea tu perfil de jugador completo
-  -- Necesitas exactamente 4 variables con local
-  
-  local nombreUsuario = 
-  local nivelActual = 
-  local juegoFavorito = 
-  local esVIP = 
-  
-  -- Muestra tu perfil usando concatenación (..)
-  print("=== PERFIL DE JUGADOR ===")
-  -- Agrega aquí 4 prints que muestren cada variable`,
-        solution: `-- Ejemplo de solución completa
-  local nombreUsuario = "RobloxMaster"
-  local nivelActual = 25
-  local juegoFavorito = "Brookhaven"
-  local esVIP = true
-  
-  print("=== PERFIL DE JUGADOR ===")
-  print("Usuario: " .. nombreUsuario)
-  print("Nivel: " .. nivelActual)
-  print("Juego favorito: " .. juegoFavorito)
-  print("VIP: " .. tostring(esVIP))`,
-        hint: "🔍 Pista: Usa 'local' para cada variable, asigna valores reales, y usa '..' para concatenar en print(). Para boolean usa tostring().",
-        validation: {
-          requiredVariables: ["nombreUsuario", "nivelActual", "juegoFavorito", "esVIP"],
-          requiredPrints: 4,
-          mustContain: ["local", "print", ".."],
-          customValidation: (code: string) => {
-            const prints = code.match(/print\s*$$[^)]+$$/g) || []
-            const hasConcatenation = prints.some((p) => p.includes(".."))
-            if (!hasConcatenation) {
-              return {
-                isValid: false,
-                message: "❌ Debes usar concatenación (..)\n💡 Ejemplo: print('Nombre: ' .. nombreUsuario)",
-              }
-            }
-  
-            if (!code.includes("tostring")) {
-              return {
-                isValid: false,
-                message: "❌ Usa tostring() para mostrar valores boolean\n💡 Ejemplo: print('VIP: ' .. tostring(esVIP))",
-              }
-            }
-  
-            return { isValid: true, message: "" }
-          },
+  },
+  "variables-basicas": {
+    title: "Variables y Tipos Básicos",
+    description: "Declara variables de diferentes tipos y muéstralas.",
+    tutorial: {
+      content: `Las variables son espacios donde puedes guardar información para usarla después. En Lua puedes guardar texto (string), números (number) y valores lógicos (booleanos: true/false). Aprender a declarar y usar variables es clave para cualquier programa.`,
+      code: `local mascota = "Perro"
+local puntos = 50
+local tieneChip = true
+print(mascota)
+print(puntos)
+print(tieneChip)`,
+      explanation: `- Usa local para declarar variables
+- Puedes imprimir variables con print()`
+    },
+    challenge: {
+      title: "Reto: Declara y muestra variables",
+      description: "Crea una variable string, una number y una boolean. Imprímelas con print(). Usa valores diferentes al ejemplo.",
+      starterCode: `-- Declara tus variables aquí
+`,
+      solution: `local animal = "Gato"
+local edadMascota = 5
+local tieneCollar = false
+print(animal)
+print(edadMascota)
+print(tieneCollar)`,
+      hint: "Usa nombres y valores distintos al ejemplo del tutorial.",
+      validation: {
+        requiredPrints: 3,
+        mustContain: ["local", "print"],
+        customValidation: (code: string) => {
+          const tutorialCode = `local mascota = \"Perro\"\nlocal puntos = 50\nlocal tieneChip = true\nprint(mascota)\nprint(puntos)\nprint(tieneChip)`;
+          const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+          if (normalize(code) === normalize(tutorialCode)) {
+            return { isValid: false, message: "No copies el ejemplo del tutorial. Usa tus propios nombres y valores." };
+          }
+          const hasBoolean = /\b(true|false)\b/.test(code);
+          const hasNumber = /\b\d+\b/.test(code);
+          const hasString = /"[^"]*"|'[^']*'/.test(code);
+          if (!hasBoolean) {
+            return { isValid: false, message: "Debes declarar al menos un booleano (true o false)." };
+          }
+          if (!hasNumber) {
+            return { isValid: false, message: "Debes declarar al menos un número." };
+          }
+          if (!hasString) {
+            return { isValid: false, message: "Debes declarar al menos un string (texto entre comillas)." };
+          }
+          return { isValid: true, message: "" };
         },
       },
     },
-    "pulso-juego": {
-      title: "El Pulso del Juego",
-      description: "Eventos y condicionales",
-      tutorial: {
-        content: `¡Felicidades por llegar hasta aquí! Ahora aprenderás sobre **condicionales** - la lógica que hace que los juegos sean inteligentes.
-  
-  Los condicionales son como preguntas que tu código se hace a sí mismo: "¿Si esto es verdad, entonces qué hago?"
-  
-  **Palabras mágicas:**
-  - \`if\` = "si"
-  - \`then\` = "entonces"
-  - \`else\` = "si no"
-  - \`end\` = "fin"
-  
-  En Roblox, los condicionales controlan todo: desde abrir puertas hasta dar puntos.`,
-        code: `-- Ejemplo: Sistema de puntos
-  local puntaje = 150
-  local nivel = 1
-  
-  -- Verificar nivel basado en puntaje
-  if puntaje >= 100 then
-      nivel = 2
-      print("¡Felicidades! Subiste al nivel 2")
-  else
-      print("Necesitas más puntos para subir de nivel")
-  end
-  
-  -- Verificar logros
-  if puntaje >= 200 then
-      print("🏆 ¡Logro desbloqueado: Maestro!")
-  elseif puntaje >= 100 then
-      print("⭐ ¡Logro desbloqueado: Principiante!")
-  else
-      print("Sigue jugando para desbloquear logros")
-  end`,
-        explanation: `**Operadores de comparación:**
-  - \`==\` igual a
-  - \`>=\` mayor o igual que
-  - \`<=\` menor o igual que
-  - \`>\` mayor que
-  - \`<\` menor que
-  - \`~=\` diferente de`,
-      },
-      challenge: {
-        title: "Reto: Sistema de Acceso VIP",
-        description:
-          "Crea un sistema que verifique si un jugador puede acceder a áreas VIP basado en su nivel y estado VIP.",
-        starterCode: `-- Sistema de acceso VIP
-  local nivelJugador = 15
-  local esVIP = true
-  local tienePase = false
-  
-  -- Tu código aquí
-  -- Verifica si puede acceder a:
-  -- Área Normal: nivel >= 5
-  -- Área VIP: nivel >= 10 Y esVIP = true
-  -- Área Exclusiva: nivel >= 20 Y tienePase = true`,
-        solution: `-- Sistema de acceso VIP
-  local nivelJugador = 15
-  local esVIP = true
-  local tienePase = false
-  
-  print("=== SISTEMA DE ACCESO ===")
-  
-  if nivelJugador >= 5 then
-      print("✅ Acceso a Área Normal concedido")
-  else
-      print("❌ Necesitas nivel 5 para el Área Normal")
-  end
-  
-  if nivelJugador >= 10 and esVIP then
-      print("✅ Acceso a Área VIP concedido")
-  else
-      print("❌ Necesitas nivel 10 y ser VIP")
-  end
-  
-  if nivelJugador >= 20 and tienePase then
-      print("✅ Acceso a Área Exclusiva concedido")
-  else
-      print("❌ Necesitas nivel 20 y pase especial")
-  end`,
-        hint: 'Usa "and" para verificar múltiples condiciones. Recuerda usar >= para "mayor o igual".',
-        validation: {
-          requiredKeywords: ["if", "then", "end", "and"],
-          requiredPrints: 3,
-          mustContain: [">=", "and"],
+  },
+  "condicionales-zona": {
+    title: "Condicionales: Acceso a Zona Especial",
+    description: "Usa if/then/else para tomar decisiones según condiciones.",
+    tutorial: {
+      content: `Los condicionales permiten que tu código tome decisiones. Con if, then, else y end puedes ejecutar diferentes acciones según si una condición se cumple o no. Esto es esencial para crear lógica y reglas en cualquier programa o juego.`,
+      code: `local tieneLlave = false
+if tieneLlave then
+    print("¡Puerta abierta!")
+else
+    print("Necesitas la llave para entrar")
+end`,
+      explanation: `¿Qué es un condicional?\nUn condicional es una forma de que tu código \"pregunte\" algo y actúe según la respuesta.\n\n- if: pregunta una condición (por ejemplo, ¿tieneLlave?)\n- then: indica qué hacer si la respuesta es SÍ (verdadero)\n- else: indica qué hacer si la respuesta es NO (falso)\n- end: marca el final del bloque condicional\n\nEjemplo:\nSi tieneLlave es true, se muestra \"¡Puerta abierta!\".\nSi tieneLlave es false, se muestra \"Necesitas la llave para entrar\".\n\nEsto es útil para crear reglas y caminos diferentes en tus juegos.`
+    },
+    challenge: {
+      title: "Reto: Acceso VIP",
+      description: "Si el jugador es VIP, imprime '¡Bienvenido al área secreta!'. Si no, imprime 'Acceso restringido'. Usa nombres y mensajes distintos al ejemplo.",
+      starterCode: `local tienePase = true
+-- Tu código aquí
+`,
+      solution: `local tienePase = true
+if tienePase then
+    print("¡Bienvenido al área secreta!")
+else
+    print("Acceso restringido")
+end`,
+      hint: "No uses los mismos nombres ni mensajes del tutorial.",
+      validation: {
+        requiredKeywords: ["if", "then", "else", "end"],
+        requiredPrints: 2,
+        mustContain: ["if", "then", "else", "end"],
+        customValidation: (code: string) => {
+          const tutorialCode = `local tieneLlave = false\nif tieneLlave then\n    print(\"¡Puerta abierta!\")\nelse\n    print(\"Necesitas la llave para entrar\")\nend`;
+          const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+          if (normalize(code) === normalize(tutorialCode)) {
+            return { isValid: false, message: "No copies el ejemplo del tutorial. Usa nombres y mensajes diferentes." };
+          }
+          return { isValid: true, message: "" };
         },
       },
     },
-    "maestro-funciones": {
-      title: "El Maestro de las Funciones",
-      description: "Creando y usando funciones",
-      tutorial: {
-        content: `¡Bienvenido al mundo de las **funciones**! Las funciones son como **máquinas mágicas** que toman información, la procesan y devuelven un resultado.
-  
-  **¿Qué son las funciones?**
-  - Son bloques de código reutilizable
-  - Pueden recibir información (parámetros)
-  - Pueden devolver resultados (return)
-  - Hacen tu código más organizado y eficiente
-  
-  **¿Por qué usar funciones?**
-  - **DRY**: Don't Repeat Yourself (No te repitas)
-  - Facilitan encontrar y arreglar errores
-  - Hacen el código más legible
-  - Permiten trabajar en equipo más fácilmente
-  
-  **Anatomía de una función:**
-  \`\`\`lua
-  function nombreFuncion(parametro1, parametro2)
-      -- código de la función
-      local resultado = parametro1 + parametro2
-      return resultado  -- devuelve el resultado
-  end
-  \`\`\`
-  
-  **Conceptos clave:**
-  - **function**: palabra clave para crear funciones
-  - **parámetros**: información que recibe la función
-  - **return**: valor que devuelve la función
-  - **llamada**: usar la función con su nombre()`,
-        code: `-- Función simple sin parámetros
-  function saludar()
-      print("¡Hola, programador!")
-      print("¡Bienvenido al mundo de las funciones!")
-  end
-  
-  -- Función con parámetros y return
-  function calcularDaño(ataque, defensa)
-      local daño = ataque - defensa
-      if daño < 0 then
-          daño = 0  -- No puede haber daño negativo
-      end
-      return daño
-  end
-  
-  -- Función para crear personajes
-  function crearPersonaje(nombre, nivel, clase)
-      print("=== NUEVO PERSONAJE CREADO ===")
-      print("Nombre: " .. nombre)
-      print("Nivel: " .. nivel)
-      print("Clase: " .. clase)
-      print("¡Personaje listo para la aventura!")
-      return true  -- indica que se creó exitosamente
-  end
-  
-  -- Usando las funciones (llamadas)
-  saludar()
-  
-  local dañoFinal = calcularDaño(50, 20)
-  print("Daño causado: " .. dañoFinal)
-  
-  local personajeCreado = crearPersonaje("DragonSlayer", 25, "Guerrero")
-  print("Personaje creado: " .. tostring(personajeCreado))`,
-        explanation: `**Conceptos importantes:**
-  
-  1. **Declaración**: \`function nombre()\` crea la función
-  2. **Parámetros**: Variables que recibe la función
-  3. **Return**: Devuelve un valor al código que llamó la función
-  4. **Llamada**: \`nombreFuncion()\` ejecuta la función
-  5. **Scope**: Variables dentro de funciones son locales
-  6. **Reutilización**: Una función se puede llamar muchas veces`,
-      },
-      challenge: {
-        title: "Reto: Sistema de Experiencia para Roblox",
-        description:
-          "Crea 3 funciones específicas para un sistema de experiencia: calcular XP ganado, determinar nivel, y mostrar estadísticas. Cada función debe tener parámetros y return.",
-        starterCode: `-- Sistema de experiencia para juegos de Roblox
-  -- Debes crear exactamente 3 funciones:
-  
-  -- 1. calcularXP(enemigosVencidos, dificultad)
-  --    Debe retornar: enemigosVencidos * dificultad * 10
-  
-  -- 2. calcularNivel(xpTotal)
-  --    Debe retornar: xpTotal dividido entre 100 (sin decimales)
-  
-  -- 3. mostrarEstadisticas(nombre, xp, nivel)
-  --    Debe imprimir las estadísticas del jugador
-  
-  -- Escribe tus funciones aquí:
-  
-  
-  -- Prueba tus funciones (NO BORRES ESTA PARTE):
-  local xpGanado = calcularXP(5, 3)
-  local nivelActual = calcularNivel(xpGanado)
-  mostrarEstadisticas("SuperGamer", xpGanado, nivelActual)`,
-        solution: `-- Sistema de experiencia para juegos de Roblox
-  
-  function calcularXP(enemigosVencidos, dificultad)
-      return enemigosVencidos * dificultad * 10
-  end
-  
-  function calcularNivel(xpTotal)
-      return math.floor(xpTotal / 100)
-  end
-  
-  function mostrarEstadisticas(nombre, xp, nivel)
-      print("=== ESTADÍSTICAS DEL JUGADOR ===")
-      print("Nombre: " .. nombre)
-      print("XP Total: " .. xp)
-      print("Nivel: " .. nivel)
-      print("¡Sigue así, campeón!")
-  end
-  
-  -- Prueba de las funciones
-  local xpGanado = calcularXP(5, 3)
-  local nivelActual = calcularNivel(xpGanado)
-  mostrarEstadisticas("SuperGamer", xpGanado, nivelActual)`,
-        hint: "🔍 Pista: Cada función debe tener 'function nombre()' y 'end'. Las que calculan deben usar 'return'. Usa math.floor() para quitar decimales.",
-        validation: {
-          requiredFunctions: ["calcularXP", "calcularNivel", "mostrarEstadisticas"],
-          requiredKeywords: ["function", "return", "end"],
-          mustContain: ["function", "return"],
-          requireReturn: true,
-          customValidation: (code: string) => {
-            if (!code.includes("enemigosVencidos * dificultad * 10")) {
-              return {
-                isValid: false,
-                message: "❌ calcularXP debe usar la fórmula: enemigosVencidos * dificultad * 10",
-              }
-            }
-  
-            if (!code.includes("math.floor")) {
-              return {
-                isValid: false,
-                message:
-                  "❌ calcularNivel debe usar math.floor() para quitar decimales\n💡 Ejemplo: return math.floor(xpTotal / 100)",
-              }
-            }
-  
-            const funcMatch = code.match(/function\s+mostrarEstadisticas[\s\S]*?end/i)
-            if (funcMatch && !funcMatch[0].includes("print")) {
-              return {
-                isValid: false,
-                message: "❌ mostrarEstadisticas debe tener comandos print()\n💡 Debe mostrar nombre, xp y nivel",
-              }
-            }
-  
-            return { isValid: true, message: "" }
-          },
+  },
+  "funcion-saludo": {
+    title: "Funciones: Saludo Personalizado",
+    description: "Crea y usa funciones simples para saludar a un jugador.",
+    tutorial: {
+      content: `Las funciones te permiten agrupar instrucciones y reutilizarlas. Puedes pasarles información (parámetros) y hacer que realicen tareas específicas. Usar funciones hace tu código más ordenado y fácil de mantener.`,
+      code: `function bienvenida(nombre)
+    print("¡Bienvenida, " .. nombre .. "!")
+end
+bienvenida("Luna")`,
+      explanation: `- function crea una función
+- .. concatena texto y variables
+- Llama la función con su nombre y un valor entre paréntesis`
+    },
+    challenge: {
+      title: "Reto: Saludo personalizado",
+      description: "Crea una función que reciba un apodo y lo salude con un mensaje diferente al ejemplo. Llama la función con tu apodo.",
+      starterCode: `-- Escribe tu función aquí
+`,
+      solution: `function saludar(apodo)
+    print("¡Saludos, " .. apodo .. "! ¿Listo para jugar?")
+end
+saludar("Coder")`,
+      hint: "Usa un apodo y un mensaje distinto al ejemplo.",
+      validation: {
+        requiredKeywords: ["function", "end", ".."],
+        requiredPrints: 1,
+        mustContain: ["function", ".."],
+        customValidation: (code: string) => {
+          const tutorialCode = `function bienvenida(nombre)\n    print(\"¡Bienvenida, " .. nombre .. "!\")\nend\nbienvenida(\"Luna\")`;
+          const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+          if (normalize(code) === normalize(tutorialCode)) {
+            return { isValid: false, message: "No copies el ejemplo del tutorial. Usa un apodo y mensaje diferente." };
+          }
+          // Validar que haya una función definida y llamada con un string
+          const funcDefMatch = code.match(/function\s+(\w+)\s*\((\w+)\)/);
+          if (!funcDefMatch) {
+            return { isValid: false, message: "Debes definir una función que reciba un apodo." };
+          }
+          const funcName = funcDefMatch[1];
+          const callMatch = code.match(new RegExp(funcName + "\\s*\\((['\"])(.*?)\\1\\)"));
+          if (!callMatch) {
+            return { isValid: false, message: `Debes llamar a la función '${funcName}' con un apodo entre comillas y entre paréntesis.` };
+          }
+          const calledWith = callMatch[2];
+          if (!calledWith || calledWith.length < 3) {
+            return { isValid: false, message: "Debes llamar la función con un apodo válido (mínimo 3 caracteres)." };
+          }
+          return { isValid: true, message: "" };
         },
       },
     },
-    "ciclos-infinitos": {
-      title: "Los Ciclos Infinitos",
-      description: "Loops y repeticiones",
-      tutorial: {
-        content: `¡Llegaste a la misión más poderosa! Los **loops** (ciclos) te permiten repetir código automáticamente. ¡Es como tener un ejército de robots haciendo trabajo por ti!
-  
-  **¿Qué son los loops?**
-  - Estructuras que repiten código múltiples veces
-  - Evitan escribir el mismo código una y otra vez
-  - Son fundamentales en la programación de juegos
-  - Permiten crear efectos, animaciones y sistemas complejos
-  
-  **Tipos de loops en Lua:**
-  
-  **1. FOR Loop Básico:**
-  \`\`\`lua
-  for i = 1, 5 do
-      print("Número: " .. i)
-  end
-  \`\`\`
-  
-  **2. FOR Loop con Incremento:**
-  \`\`\`lua
-  for i = 0, 10, 2 do  -- de 0 a 10, de 2 en 2
-      print("Par: " .. i)
-  end
-  \`\`\`
-  
-  **3. WHILE Loop:**
-  \`\`\`lua
-  local contador = 1
-  while contador <= 5 do
-      print("Vuelta: " .. contador)
-      contador = contador + 1
-  end
-  \`\`\`
-  
-  **¿Cuándo usar loops?**
-  - Crear múltiples objetos (enemigos, monedas, etc.)
-  - Procesar listas de jugadores
-  - Animaciones y efectos visuales
-  - Sistemas de puntuación y estadísticas`,
-        code: `-- Loop FOR básico - Cuenta del 1 al 5
-  print("=== CONTEO BÁSICO ===")
-  for i = 1, 5 do
-      print("Número: " .. i)
-  end
-  
-  -- Loop FOR con incremento personalizado
-  print("\\n=== NÚMEROS PARES ===")
-  for i = 2, 10, 2 do
-      print("Par: " .. i)
-  end
-  
-  -- Loop WHILE con condición
-  print("\\n=== SIMULACIÓN DE COMBATE ===")
-  local vida = 100
-  local turno = 1
-  
-  while vida > 0 do
-      print("Turno " .. turno .. " - Vida restante: " .. vida)
-      vida = vida - 25  -- Pierde 25 de vida cada turno
-      turno = turno + 1
-      
-      if turno > 10 then  -- Evitar loop infinito
-          break
-      end
-  end
-  print("¡Combate terminado!")
-  
-  -- Loops anidados - Crear una cuadrícula
-  print("\\n=== CREANDO MAPA 3x3 ===")
-  for fila = 1, 3 do
-      for columna = 1, 3 do
-          print("Posición [" .. fila .. "," .. columna .. "] creada")
-      end
-      print("--- Fila " .. fila .. " completada ---")
-  end`,
-        explanation: `**Sintaxis importante:**
-  
-  1. **for i = inicio, fin do**: Loop básico
-  2. **for i = inicio, fin, paso do**: Loop con incremento personalizado  
-  3. **while condición do**: Loop que continúa mientras la condición sea verdadera
-  4. **do...end**: Delimita el código que se repite
-  5. **break**: Sale del loop inmediatamente
-  6. **Loops anidados**: Un loop dentro de otro loop
-  7. **Variables de control**: i, fila, columna son variables que cambian en cada iteración`,
-      },
-      challenge: {
-        title: "Reto: Generador de Oleadas de Enemigos",
-        description:
-          "Crea un sistema que genere 3 oleadas de enemigos usando loops anidados. Cada oleada debe tener más enemigos que la anterior (2, 4, 6 enemigos respectivamente).",
-        starterCode: `-- Generador de oleadas de enemigos para Roblox
-  -- Debes crear un sistema que:
-  -- 1. Genere exactamente 3 oleadas (usa for i = 1, 3)
-  -- 2. Cada oleada tenga más enemigos: Oleada 1=2, Oleada 2=4, Oleada 3=6
-  -- 3. Use loops anidados (un for dentro de otro for)
-  -- 4. Muestre información de cada enemigo
-  
-  print("=== INICIANDO INVASIÓN ===")
-  
-  -- Tu código aquí:
-  -- Usa: for oleada = 1, 3 do
-  --   Dentro usa: for enemigo = 1, numEnemigos do
-  
-  
-  print("\\n🏆 ¡INVASIÓN COMPLETADA!")`,
-        solution: `-- Generador de oleadas de enemigos para Roblox
-  
-  print("=== INICIANDO INVASIÓN ===")
-  
-  for oleada = 1, 3 do
-      print("\\n🌊 OLEADA " .. oleada .. " COMENZANDO!")
-      
-      local numEnemigos = oleada * 2  -- 2, 4, 6 enemigos
-      print("Preparando " .. numEnemigos .. " enemigos...")
-      
-      for enemigo = 1, numEnemigos do
-          print("👹 Enemigo " .. enemigo .. " de la oleada " .. oleada)
-          print("   Vida: " .. (50 + oleada * 20))
-          print("   Ataque: " .. (10 + oleada * 5))
-          print("   Velocidad: " .. (5 + oleada * 2))
-          print("   ---")
-      end
-      
-      print("✅ Oleada " .. oleada .. " completada!")
-      print("Enemigos derrotados: " .. numEnemigos)
-  end
-  
-  print("\\n🏆 ¡INVASIÓN COMPLETADA!")
-  print("¡Eres un verdadero héroe!")`,
-        hint: "🔍 Pista: Usa 'for oleada = 1, 3 do' para las oleadas, y dentro 'for enemigo = 1, numEnemigos do'. Calcula numEnemigos = oleada * 2.",
-        validation: {
-          requiredKeywords: ["for", "do", "end"],
-          nestedLoops: true,
-          requiredPrints: 8,
-          mustContain: ["for", "do", "end"],
-          customValidation: (code: string) => {
-            if (!code.includes("oleada") || !code.includes("enemigo")) {
-              return {
-                isValid: false,
-                message:
-                  "❌ Debes usar variables 'oleada' y 'enemigo' en tus loops\n💡 for oleada = 1, 3 do\n    for enemigo = 1, numEnemigos do",
-              }
-            }
-  
-            if (!code.includes("oleada * 2") && !code.includes("2 * oleada")) {
-              return {
-                isValid: false,
-                message: "❌ Debes calcular numEnemigos = oleada * 2\n💡 Esto da 2, 4, 6 enemigos para cada oleada",
-              }
-            }
-  
-            const printCount = (code.match(/print\s*\(/g) || []).length
-            if (printCount < 8) {
-              return {
-                isValid: false,
-                message:
-                  "❌ Necesitas más prints para mostrar información detallada\n💡 Muestra información de oleadas y enemigos",
-              }
-            }
-  
-            return { isValid: true, message: "" }
-          },
+  },
+  "bucles-basico": {
+    title: "Bucles (básico): Contador de Monedas",
+    description: "Utiliza un bucle for para imprimir 'Moneda recogida' cinco veces, numerando cada una.",
+    tutorial: {
+      content: `Los bucles for te permiten repetir acciones varias veces de forma automática. Son muy útiles para recorrer listas, contar elementos o realizar tareas repetitivas sin escribir el mismo código muchas veces.`,
+      code: `for k = 1, 5 do
+    print("Punto ganado: " .. k)
+end`,
+      explanation: `- for k = 1, 5 do repite 5 veces
+- .. concatena texto y variables`
+    },
+    challenge: {
+      title: "Reto: Contador de monedas",
+      description: "Imprime 'Moneda obtenida: X' cinco veces usando un for. Usa un texto diferente al ejemplo.",
+      starterCode: `-- Tu código aquí
+`,
+      solution: `for j = 1, 5 do
+    print("Moneda obtenida: " .. j)
+end`,
+      hint: "Cambia el texto y la variable respecto al ejemplo.",
+      validation: {
+        requiredKeywords: ["for", "do", "end"],
+        requiredPrints: 5,
+        mustContain: ["for", "print"],
+        customValidation: (code: string) => {
+          const tutorialCode = `for k = 1, 5 do\n    print(\"Punto ganado: " .. k)\nend`;
+          const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+          if (normalize(code) === normalize(tutorialCode)) {
+            return { isValid: false, message: "No copies el ejemplo del tutorial. Cambia el texto y la variable." };
+          }
+          return { isValid: true, message: "" };
         },
       },
     },
-  }
+  },
+  "mini-juego-monedas": {
+    title: "Mini Juego: Recolecta Monedas y Gana Premio",
+    description: "Integra variables, bucles y condicionales para simular la recolección de monedas. Si el jugador recoge 5 monedas, imprime '¡Premio desbloqueado!'.",
+    tutorial: {
+      content: `En muchos juegos, los bucles y condicionales se usan para repetir acciones y tomar decisiones. Por ejemplo, recolectar ítems, sumar puntos o verificar si se ganó un premio. Aprender a combinar estas estructuras es clave para crear lógica divertida y dinámica.`,
+      code: `local estrellas = 0
+for i = 1, 5 do
+    estrellas = estrellas + 1
+    print("Estrella conseguida: " .. estrellas)
+end
+if estrellas == 5 then
+    print("¡Logro desbloqueado!")
+end`,
+      explanation: `- Usa una variable para contar estrellas
+- Usa un bucle for para recolectar
+- Usa un if para verificar si se ganó el premio`
+    },
+    challenge: {
+      title: "Reto: Mini juego de monedas",
+      description: "Cuenta hasta 5 monedas usando un for y muestra un mensaje de premio si se logran todas. Usa nombres y mensajes distintos al ejemplo.",
+      starterCode: `local monedas = 0
+-- Tu código aquí
+`,
+      solution: `local monedas = 0
+for i = 1, 5 do
+    monedas = monedas + 1
+    print("Moneda conseguida: " .. monedas)
+end
+if monedas == 5 then
+    print("¡Premio desbloqueado!")
+end`,
+      hint: "Usa siempre 'moneda' en los mensajes y variables. No copies el ejemplo de estrellas.",
+      validation: {
+        requiredKeywords: ["for", "if", "then", "end"],
+        requiredPrints: 2,
+        mustContain: ["moneda", "for", "if"],
+        customValidation: (code: string) => {
+          const tutorialCode = `local estrellas = 0\nfor i = 1, 5 do\n    estrellas = estrellas + 1\n    print(\"Estrella conseguida: " .. estrellas)\nend\nif estrellas == 5 then\n    print(\"¡Logro desbloqueado!\")\nend`;
+          const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+          if (normalize(code) === normalize(tutorialCode)) {
+            return { isValid: false, message: "No copies el ejemplo del tutorial. Usa nombres y mensajes diferentes." };
+          }
+          if (!/moneda/i.test(code)) {
+            return { isValid: false, message: "Tu código debe mencionar 'moneda' al menos una vez." };
+          }
+          return { isValid: true, message: "" };
+        },
+      },
+    },
+  },
+  "desafio-final": {
+    title: "Desafío Final: Juego de Aventuras y Tesoros",
+    description: "Crea un script inspirado en un minijuego de aventuras: apodo, función de bienvenida, bucle de gemas, condicional de pase dorado y mensaje de cofre dorado.",
+    tutorial: {
+      content: `En un juego de aventuras, es común combinar variables, funciones, bucles y condicionales para crear desafíos complejos. Pensar en cómo se relacionan estos conceptos te ayudará a resolver problemas y a crear scripts más interesantes y completos.\n\nPara completar este desafío, tu script debe cumplir con:\n\n- Crear una variable con el apodo de tu jugador.\n- Crear una variable booleana (true/false) que indique si el jugador tiene un “pase dorado”.\n- Crear una variable para contar cuántas “gemas” recolecta el jugador.\n- Escribir una función que reciba el apodo y muestre un mensaje de bienvenida al juego.\n- Llamar esa función con el apodo de tu jugador.\n- Usar un bucle for para simular que el jugador recolecta 3 gemas y mostrar un mensaje por cada una.\n- Usar un condicional if para verificar si el jugador tiene el pase dorado:\n   - Si lo tiene: mostrar un mensaje de que abrió el cofre dorado y ganó un premio.\n   - Si no lo tiene: mostrar un mensaje que diga que necesita el pase dorado para abrir el cofre.\n- Usar en los mensajes las palabras “gema”, “cofre” y “dorado”.\n\n¡Usá tu creatividad y no repitas los nombres ni mensajes de los ejemplos anteriores!`,
+    },
+    challenge: {
+      title: "Reto: Desafío final",
+      description: "Crea un script que combine: variable de apodo, función de bienvenida, bucle de gemas, condicional de pase dorado y mensaje de cofre dorado. Usa nombres y mensajes inspirados en un juego de aventuras.",
+      starterCode: `-- Escribe aquí tu desafío final
+`,
+      hint: "Recordá: usá apodo, función, bucle, condicional, gema, cofre y dorado. Podés repasar las misiones anteriores si te trabás.",
+      validation: {
+        requiredKeywords: ["function", "for", "if", "else", "then", "end"],
+        requiredPrints: 4,
+        mustContain: ["gema", "cofre", "dorado"],
+        customValidation: (code: string) => {
+          const tutorialCode = `local nombre = \"PixelHero\"\nlocal esVIP = true\nlocal monedas = 0\nfunction saludar(nombre)\n    print(\"¡Bienvenido, " .. nombre .. "!\")\nend\nsaludar(nombre)\nfor i = 1, 3 do\n    monedas = monedas + 1\n    print(\"Moneda recogida: " .. monedas)\nend\nif esVIP then\n    print(\"Acceso VIP concedido\")\nelse\n    print(\"No eres VIP\")\nend`;
+          const normalize = (str: string) => str.replace(/\s/g, "").toLowerCase();
+          if (normalize(code) === normalize(tutorialCode)) {
+            return { isValid: false, message: "Inventá tus propios nombres y mensajes." };
+          }
+          if (!/gema/i.test(code)) {
+            return { isValid: false, message: "Tu código debe mencionar 'gema' al menos una vez." };
+          }
+          if (!/cofre/i.test(code)) {
+            return { isValid: false, message: "Tu código debe mencionar 'cofre' al menos una vez." };
+          }
+          if (!/dorado/i.test(code) && !/gold/i.test(code)) {
+            return { isValid: false, message: "Tu código debe mencionar 'dorado' o 'gold' al menos una vez." };
+          }
+          return { isValid: true, message: "" };
+        }
+      }
+    }
+  },
+  "gui-basico": {
+    title: "🧪 Próximamente: Interfaz con GUI",
+    description: "Aprenderás a mostrar botones y pantallas personalizadas.",
+    available: false,
+    tutorial: {
+      content: "Esta misión estará disponible pronto. ¡Prepárate para crear interfaces increíbles!",
+    },
+    challenge: {
+      title: "Desafío GUI",
+      description: "Próximamente disponible.",
+      starterCode: `-- 🚧 Esta misión está en construcción.`,
+      hint: "Mientras tanto, podés practicar con las misiones anteriores.",
+      validation: {
+        customValidation: () => ({
+          isValid: false,
+          message: "La misión aún no está disponible. ¡Volvé pronto!",
+        }),
+      },
+    },
+  },
+  "scripts-avanzados": {
+    title: "🧪 Próximamente: Scripts Avanzados",
+    description: "Explora técnicas avanzadas de scripting y lógica compleja.",
+    available: false,
+    tutorial: {
+      content: "Esta misión estará disponible pronto. ¡Vas a poder llevar tus habilidades al siguiente nivel!",
+    },
+    challenge: {
+      title: "Desafío Avanzado",
+      description: "Próximamente disponible.",
+      starterCode: `-- 🚧 Esta misión está en construcción.`,
+      hint: "Repasá las misiones anteriores para estar listo cuando se habilite este desafío.",
+      validation: {
+        customValidation: () => ({
+          isValid: false,
+          message: "La misión aún no está disponible. ¡Volvé pronto!",
+        }),
+      },
+    },
+  },
+}
 
 export default missionsData; 

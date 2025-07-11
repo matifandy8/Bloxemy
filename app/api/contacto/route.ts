@@ -81,9 +81,9 @@ export async function POST(request: Request) {
             );
         }
 
-        const { nombre, email, mensaje, edad } = await request.json();
+        const { nombre, email, mensaje} = await request.json();
 
-        if (!nombre || !email || !mensaje || !edad) {
+        if (!nombre || !email || !mensaje) {
             return NextResponse.json(
                 { error: 'Todos los campos son requeridos' },
                 { status: 400, headers: securityHeaders }
@@ -114,7 +114,6 @@ export async function POST(request: Request) {
         const sanitizedName = sanitizeInput(nombre);
         const sanitizedEmail = sanitizeInput(email);
         const sanitizedMessage = sanitizeInput(mensaje);
-        const sanitizedEdad = sanitizeInput(edad);
 
         const requiredEnvVars = [
             'SMTP_HOST',
@@ -147,7 +146,6 @@ export async function POST(request: Request) {
             text: `
 Nombre: ${sanitizedName}
 Email: ${sanitizedEmail}
-Edad del estudiante: ${sanitizedEdad}
 IP: ${ip}
 Mensaje: ${sanitizedMessage}
             `,
@@ -155,7 +153,6 @@ Mensaje: ${sanitizedMessage}
 <h3>Consulta para clases personalizadas</h3>
 <p><strong>Nombre:</strong> ${sanitizedName}</p>
 <p><strong>Email:</strong> ${sanitizedEmail}</p>
-<p><strong>Edad del estudiante:</strong> ${sanitizedEdad}</p>
 <p><strong>IP:</strong> ${ip}</p>
 <p><strong>Mensaje:</strong> ${sanitizedMessage}</p>
             `,
