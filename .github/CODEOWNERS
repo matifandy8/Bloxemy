@@ -1,0 +1,6 @@
+# CODEOWNERS para Bloxemy
+# Asigna responsables de revisión y aprobación de cambios en el repositorio.
+# Más info: https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+
+# Propietario principal (reemplaza con tu usuario de GitHub)
+*       @matifandy8
