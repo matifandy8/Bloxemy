@@ -50,19 +50,20 @@ export default async function RootLayout({
 
   return (
     <html lang="es">
-        <head>
-         <Script strategy="afterInteractive"
-                      id="nonce-script"
-                      nonce={nonce}
-                      dangerouslySetInnerHTML={{
-    __html: `__webpack_nonce__ = ${JSON.stringify(nonce)}`
-}}
-                  />
+      <head>
+        <Script
+          strategy="afterInteractive"
+          id="nonce-script"
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `__webpack_nonce__ = ${JSON.stringify(nonce)};`,
+          }}
+        />
       </head>
       <body>
-        <Navbar/>
+        <Navbar />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

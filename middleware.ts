@@ -1,13 +1,13 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const nonce = crypto.randomUUID()
+  const nonce = crypto.randomUUID();
 
   const csp = [
     `default-src 'self'`,
     `script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net`,
-    `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com https://cdn.jsdelivr.net`,
+    `style-src 'self' 'nonce-${nonce}' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net`,
     `font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net`,
     `img-src 'self' data:`,
     `object-src 'none'`,
@@ -15,24 +15,17 @@ export function middleware(request: NextRequest) {
     `connect-src 'self'`,
     `base-uri 'none'`,
     `form-action 'self'`,
-  ].join('; ')
+  ].join('; ');
 
-  const response = NextResponse.next()
+  const response = NextResponse.next();
+
   if (process.env.NODE_ENV === 'production') {
-    response.headers.set('Content-Security-Policy', csp)
+    response.headers.set('Content-Security-Policy', csp);
   }
 
-  
-  response.cookies.set('nonce', nonce, {
-    httpOnly: false, 
-    sameSite: 'strict',
-    secure: process.env.NODE_ENV === 'production',
-    path: '/',
-  })
-
-  return response
+  return response;
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-}
+  matcher: ['/((?!_next/|api/|favicon.ico).*)'],
+};

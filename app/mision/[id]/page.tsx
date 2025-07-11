@@ -326,14 +326,6 @@ export default function MissionPage() {
                         accessibilitySupport: "off",
                         fixedOverflowWidgets: true,
                       }}
-                      beforeMount={(monaco) => {
-                        monaco.editor.defineTheme('vs-dark', {
-                          base: 'vs-dark',
-                          inherit: true,
-                          rules: [],
-                          colors: {}
-                        });
-                      }}
                     />
                   </div>
                   <Button
