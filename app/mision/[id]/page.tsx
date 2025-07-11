@@ -22,23 +22,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import missionsData from "@/lib/missionsData";
-import dynamic from "next/dynamic";
 import { runMissionCode } from "@/lib/services/missionService";
-import { useToast } from "@/components/ui/use-toast";
+import MonacoEditor from "@monaco-editor/react";
 
-const MonacoEditor = dynamic(
-  () => import("@monaco-editor/react").then((mod) => mod.default),
-  {
-    ssr: false,
-    loading: () => (
-      <div
-        className="h-[300px] bg-gray-100 animate-pulse rounded flex items-center justify-center"
-      >
-        Cargando editor...
-      </div>
-    ),
-  },
-) as typeof import("@monaco-editor/react").default;
 
 export default function MissionPage() {
   const params = useParams();
@@ -337,6 +323,7 @@ export default function MissionPage() {
                         readOnly: false,
                         automaticLayout: true,
                       }}
+                    
                     />
                   </div>
                   <Button
