@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { cookies } from 'next/headers'
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Bloxemy - Tu Academia de Programación Roblox",
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
   creator: "Bloxemy",
   publisher: "Bloxemy",
   robots: "index, follow",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   openGraph: {
     type: "website",
     locale: "es_ES",
@@ -35,17 +38,27 @@ export const metadata: Metadata = {
     creator: "@Bloxemy",
     site: "@Bloxemy",
   },
-  viewport: "width=device-width, initial-scale=1",
-  themeColor: "#3B82F6",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookiesList = await cookies();
+  const nonce = cookiesList.get('nonce')?.value || ''
+
   return (
     <html lang="es">
+        <head>
+         <Script strategy="afterInteractive"
+                      id="nonce-script"
+                      nonce={nonce}
+                      dangerouslySetInnerHTML={{
+    __html: `__webpack_nonce__ = ${JSON.stringify(nonce)}`
+}}
+                  />
+      </head>
       <body>
         <Navbar/>
         {children}
