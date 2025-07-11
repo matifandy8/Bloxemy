@@ -322,6 +322,9 @@ export default function MissionPage() {
                         fontFamily: "Fira Mono, monospace",
                         readOnly: false,
                         automaticLayout: true,
+                        domReadOnly: false,
+                        accessibilitySupport: "off",
+                        fixedOverflowWidgets: true,
                       }}
                       beforeMount={(monaco) => {
                         monaco.editor.defineTheme('vs-dark', {
