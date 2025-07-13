@@ -1,5 +1,46 @@
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.plugins.push(
+        new MonacoWebpackPlugin({
+          languages: ['lua'],
+          features: [
+            'bracketMatching',
+            'caretOperations',
+            'clipboard',
+            'codeAction',
+            'codelens',
+            'colorDetector',
+            'comment',
+            'contextmenu',
+            'cursorUndo',
+            'find',
+            'folding',
+            'format',
+            'hover',
+            'iPadShowKeyboard',
+            'links',
+            'parameterHints',
+            'quickCommand',
+            'quickOutline',
+            'referenceSearch',
+            'rename',
+            'smartSelect',
+            'snippets',
+            'suggest',
+            'wordHighlighter',
+            'wordOperations',
+            'wordPartOperations'
+          ],
+          filename: 'static/js/[name].worker.js',
+        })
+      );
+    }
+    return config;
+  },
   async headers() {
     return [
       {

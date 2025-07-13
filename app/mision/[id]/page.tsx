@@ -23,7 +23,7 @@ import {
 import Link from "next/link";
 import missionsData from "@/lib/missionsData";
 import { runMissionCode } from "@/lib/services/missionService";
-import MonacoEditor from "@monaco-editor/react";
+import MonacoEditorWrapper from "@/components/MonacoEditorWrapper";
 
 
 export default function MissionPage() {
@@ -309,23 +309,12 @@ export default function MissionPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="mb-4">
-                    <MonacoEditor
+                    <MonacoEditorWrapper
                       height="300px"
                       language="lua"
                       theme="vs-dark"
                       value={userCode}
                       onChange={handleCodeChange}
-                      options={{
-                        fontSize: 14,
-                        minimap: { enabled: false },
-                        wordWrap: "on",
-                        fontFamily: "Fira Mono, monospace",
-                        readOnly: false,
-                        automaticLayout: true,
-                        domReadOnly: false,
-                        accessibilitySupport: "off",
-                        fixedOverflowWidgets: true,
-                      }}
                     />
                   </div>
                   <Button
