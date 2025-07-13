@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   const csp = [
     `default-src 'self'`,
     `script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net`,
-    `style-src 'self' 'nonce-${nonce}' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net`,
+    `style-src 'self' 'nonce-${nonce}' https://fonts.googleapis.com https://cdn.jsdelivr.net`,
     `font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net`,
     `img-src 'self' data:`,
     `object-src 'none'`,
@@ -20,6 +20,7 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   if (process.env.NODE_ENV === 'production') {
+    response.cookies.set('nonce', nonce, { httpOnly: false }); 
     response.headers.set('Content-Security-Policy', csp);
   }
 

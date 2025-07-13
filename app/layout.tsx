@@ -60,6 +60,9 @@ export default async function RootLayout({
           }}
         />
       </head>
+      <Script nonce={nonce}>
+  {`console.log("Test CSP nonce OK ✅");`}
+</Script>
       <body>
         <Navbar />
         {children}
