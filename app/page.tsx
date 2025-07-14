@@ -15,38 +15,6 @@ import {
 import Link from "next/link";
 
 export default function HomePage() {
-  const learningPath = [
-    {
-      title: "Poder de la Creación",
-      color: "from-emerald-400 to-teal-600",
-      icon: <Zap className="w-6 h-6" />,
-      description: "Fundamentos básicos"
-    },
-    {
-      title: "Lenguaje de Objetos",
-      color: "from-blue-400 to-indigo-600",
-      icon: <Code className="w-6 h-6" />,
-      description: "Variables y tipos"
-    },
-    {
-      title: "Pulso del Juego",
-      color: "from-purple-400 to-violet-600",
-      icon: <Gamepad2 className="w-6 h-6" />,
-      description: "Lógica de juego"
-    },
-    {
-      title: "Maestro Funciones",
-      color: "from-orange-400 to-red-500",
-      icon: <Play className="w-6 h-6" />,
-      description: "Funciones avanzadas"
-    },
-    {
-      title: "Ciclos Infinitos",
-      color: "from-pink-400 to-rose-600",
-      icon: <ArrowRight className="w-6 h-6" />,
-      description: "Bucles y repetición"
-    },
-  ];
 
   return (
     <div
@@ -304,62 +272,6 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3">100% Seguro</h3>
                 <p className="text-gray-600">Sin registro, sin chat externo, sin datos personales. Enfoque total en el aprendizaje.</p>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-24">
-          <div className="text-center mb-16">
-            <Badge className="bg-gradient-to-r from-blue-500 to-purple-600 text-white mb-4 px-4 py-2">
-              🚀 Ruta de Aprendizaje
-            </Badge>
-            <h2
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
-            >
-              Tu Camino hacia la
-              <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent"> Maestría</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Un viaje estructurado desde los conceptos básicos hasta técnicas avanzadas
-            </p>
-          </div>
-
-          <div className="glass rounded-3xl p-8 md:p-12 border border-white/20">
-            <div
-              className="flex flex-col lg:flex-row items-center justify-center gap-8 relative"
-            >
-              {learningPath.map((step, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col items-center relative group"
-                >
-                  <div
-                    className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white shadow-xl mb-4 border-4 border-white z-10 group-hover:scale-110 transition-all duration-300`}
-                  >
-                    {step.icon}
-                  </div>
-                  <div className="text-center">
-                    <h3
-                      className="text-lg font-bold text-gray-900 mb-2 w-40"
-                    >
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 w-40">
-                      {step.description}
-                    </p>
-                  </div>
-                  {idx < learningPath.length - 1 && (
-                    <div
-                      className="hidden lg:block absolute top-10 left-full w-8 h-1 bg-gradient-to-r from-blue-400 to-purple-400 z-0"
-                    />
-                  )}
-                  {idx < learningPath.length - 1 && (
-                    <div
-                      className="lg:hidden absolute top-full left-1/2 w-1 h-8 bg-gradient-to-b from-blue-400 to-purple-400 z-0 transform -translate-x-1/2"
-                    />
-                  )}
-                </div>
-              ))}
             </div>
           </div>
         </section>
