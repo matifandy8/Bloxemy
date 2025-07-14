@@ -1,7 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Editor from "@monaco-editor/react";
+import dynamic from "next/dynamic";
+
+const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
+  ssr: false,
+  loading: () => <div>Cargando editor...</div>,
+})
 
 interface MonacoEditorWrapperProps {
   height?: string;
@@ -20,14 +24,6 @@ export default function MonacoEditorWrapper({
   onChange,
   options = {},
 }: MonacoEditorWrapperProps) {
-  const [nonce, setNonce] = useState<string>("");
-
-  useEffect(() => {
-    // Generate a nonce for this instance
-    const generatedNonce = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    setNonce(generatedNonce);
-  }, []);
-
   const defaultOptions = {
     fontSize: 14,
     minimap: { enabled: false },
@@ -41,21 +37,13 @@ export default function MonacoEditorWrapper({
   };
 
   return (
-    <div style={{ position: "relative" }}>
-      <Editor
-        height={height}
-        language={language}
-        theme={theme}
-        value={value}
-        onChange={onChange}
-        options={{ ...defaultOptions, ...options }}
-        beforeMount={(monaco) => {
-          // Add nonce to Monaco's global configuration
-          if (typeof window !== "undefined") {
-            (window as any).monacoNonce = nonce;
-          }
-        }}
-      />
-    </div>
+    <MonacoEditor
+      height={height}
+      language={language}
+      theme={theme}
+      value={value}
+      onChange={onChange}
+      options={{ ...defaultOptions, ...options }}
+    />
   );
 } 

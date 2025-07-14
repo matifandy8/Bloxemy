@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import Script from "next/script";
+import MonacoLoaderScript from "@/components/MonacoLoaderScript";
 
 export const metadata: Metadata = {
   title: "Bloxemy - Tu Academia de Programación Roblox",
@@ -46,28 +47,24 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookiesList = await cookies();
-  const nonce = cookiesList.get('nonce')?.value || ''
+  const nonce = (await headers()).get('x-nonce') || undefined
 
-  return (
-    <html lang="es">
-      <head>
-        <Script
+      return (
+      <html lang="es">
+        <head nonce={nonce}>
+          <meta name="csp-nonce" content={nonce} />
+          <Script
+          src="https://www.googletagmanager.com/gtag/js"
           strategy="afterInteractive"
-          id="nonce-script"
           nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `__webpack_nonce__ = ${JSON.stringify(nonce)};`,
-          }}
         />
-      </head>
-      <Script nonce={nonce}>
-  {`console.log("Test CSP nonce OK ✅");`}
-</Script>
-      <body>
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
+        </head>
+              <body>
+          <Navbar />
+          {children}
+          <Footer />
+          <MonacoLoaderScript />
+        </body>
     </html>
   );
 }
