@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { cookies, headers } from 'next/headers'
 import Script from "next/script";
-import MonacoLoaderScript from "@/components/MonacoLoaderScript";
+import { cookies, headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Bloxemy - Tu Academia de Programación Roblox",
@@ -58,13 +57,12 @@ export default async function RootLayout({
           strategy="afterInteractive"
           nonce={nonce}
         />
-        </head>
-              <body>
-          <Navbar />
-          {children}
-          <Footer />
-          <MonacoLoaderScript />
-        </body>
+      </head>
+      <body>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
