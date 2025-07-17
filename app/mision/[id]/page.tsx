@@ -34,6 +34,7 @@ export default function MissionPage() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [successMessage, setSuccessMessage] = useState("")
+  const [progress, setProgress] = useState<Record<string, any>>({});
 
   const missionData = missionsData[missionId as keyof typeof missionsData];
   const mission = missionData
@@ -47,11 +48,17 @@ export default function MissionPage() {
 
     useEffect(() => {
       if (mission) {
-        const progress = JSON.parse(
-          localStorage.getItem("Bloxemy-progress") || "{}"
-        );
-        const savedCode = progress[missionId]?.code;
-        setUserCode(savedCode ?? mission.challenge.starterCode);
+        const stored = localStorage.getItem("Bloxemy-progress");
+        const parsedProgress = stored ? JSON.parse(stored) : {};
+        if (JSON.stringify(progress) !== JSON.stringify(parsedProgress)) {
+          setProgress(parsedProgress);
+        }
+        const savedCode = parsedProgress[missionId]?.code;
+        // Only update userCode if it actually changes
+        const initialCode = savedCode ?? mission.challenge.starterCode;
+        if (userCode !== initialCode) {
+          setUserCode(initialCode);
+        }
         const completed = localStorage.getItem("completed")
           ? JSON.parse(localStorage.getItem("completed") || "{}")
           : {};
@@ -99,8 +106,6 @@ export default function MissionPage() {
     };
     localStorage.setItem("Bloxemy-progress", JSON.stringify(progress));
   };
-
-  const progress = JSON.parse(localStorage.getItem("Bloxemy-progress") || "{}");
 
   const handleRunCode = () => {
     runMissionCode(userCode, mission, (output) => {

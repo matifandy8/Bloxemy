@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(request: NextRequest) {
+  // Si estamos en desarrollo, no aplicar CSP
+  if (process.env.NODE_ENV === 'development') {
+    return NextResponse.next()
+  }
+
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'self';
@@ -20,6 +25,7 @@ export function middleware(request: NextRequest) {
     .replace(/\s{2,}/g, ' ')
     .trim()
 
+    
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-nonce', nonce)
 

@@ -37,7 +37,8 @@ export default function EditorWrapper({
   const [lineCount, setLineCount] = useState(1);
 
   useEffect(() => {
-    setLineCount((value || "").split("\n").length || 1);
+    const newLineCount = (value || "").split("\n").length || 1;
+    setLineCount((prev) => (prev !== newLineCount ? newLineCount : prev));
   }, [value]);
 
   const handleTextareaScroll = () => {

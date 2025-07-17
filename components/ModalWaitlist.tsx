@@ -7,16 +7,28 @@ export default function ModalWaitlist({ open, onClose, missionTitle, missionId }
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     setError("");
     if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       setError("Por favor, ingresa un email válido.");
       inputRef.current?.focus();
       return;
     }
-    // enviar a plataforma
-    console.log(email)
-    setSent(true);
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, missionTitle, missionId }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Error al enviar el email.");
+        return;
+      }
+      setSent(true);
+    } catch (e) {
+      setError("Error de red al enviar el email.");
+    }
   };
 
   if (!open) return null;

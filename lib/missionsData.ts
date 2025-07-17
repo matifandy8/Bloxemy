@@ -201,7 +201,7 @@ end`,
       hint: "Cambia el texto y la variable respecto al ejemplo.",
       validation: {
         requiredKeywords: ["for", "do", "end"],
-        requiredPrints: 5,
+        requiredPrints: 1,
         mustContain: ["for", "print"],
         customValidation: (code: string) => {
           const tutorialCode = `for k = 1, 5 do\n    print(\"Punto ganado: " .. k)\nend`;
