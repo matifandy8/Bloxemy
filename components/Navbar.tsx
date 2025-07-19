@@ -145,7 +145,7 @@ export default function Navbar() {
                 href={link.href}
                 label={link.label}
                 icon={link.icon}
-                variant={link.variant as "primary" | "secondary"}
+                variant={(link as any).variant}
               />
             ))}
           </div>
@@ -190,7 +190,7 @@ export default function Navbar() {
                 href={link.href}
                 label={link.label}
                 icon={link.icon}
-                variant={link.variant as "primary" | "secondary"}
+                variant={(link as any).variant}
                 onClick={handleMobileMenuClose}
               />
             ))}
