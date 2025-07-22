@@ -120,7 +120,6 @@ export default function Navbar() {
     <>
       <nav className="w-full sticky top-0 z-50 glass border-b border-white/20">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          {/* Logo Section */}
           <div className="flex items-center space-x-4">
             <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300">
               <Trophy className="w-7 h-7 text-white" />
@@ -137,7 +136,6 @@ export default function Navbar() {
             </div>
           </div>
           
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex space-x-6 items-center">
             {NAVIGATION.links.map((link) => (
               <NavigationLink
@@ -150,7 +148,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="lg:hidden">
             <button
               onClick={handleMobileMenuToggle}
@@ -163,7 +160,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 z-[9999] bg-black/10 backdrop-blur-md"

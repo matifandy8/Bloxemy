@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Script from "next/script";
 import { cookies, headers } from "next/headers";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Bloxemy - Tu Academia de Programación Roblox",
@@ -61,6 +62,7 @@ export default async function RootLayout({
       <body>
         <Navbar />
         {children}
+        <Analytics />
         <Footer />
       </body>
     </html>
